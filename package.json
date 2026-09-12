@@ -1,0 +1,14 @@
+{
+  "name": "pokerlandia",
+  "version": "1.0.0",
+  "description": "No-limit hold'em tournaments with public and private tables",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "dependencies": {},
+  "private": true
+}
