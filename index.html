@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>PokerLandia</title>
+<link rel="stylesheet" href="/style.css">
+</head>
+<body>
+<div id="app">
+
+  <div class="conn" id="conn">connecting</div>
+
+  <!-- ===================== TABLE ===================== -->
+  <div class="lamp"><div class="cord"></div><div class="shade"></div><div class="bulb"></div></div>
+
+  <div class="hud" id="hud">
+    <div class="chip-hud"><div class="k">Blinds</div><div class="v" id="hBlinds">—</div></div>
+    <div class="chip-hud"><div class="k">Level</div><div class="v" id="hLevel">1</div></div>
+    <div class="chip-hud"><div class="k">Hand</div><div class="v" id="hHand">1</div></div>
+    <button class="snd" id="sndBtn" aria-label="Toggle sound">&#9835;</button>
+  </div>
+
+  <div class="stage" id="stage">
+    <div class="table3d" id="table3d">
+      <div class="rail"></div>
+      <div class="felt"></div>
+      <div class="dealer" id="dealer">
+        <div class="op">
+          <div class="op-head"><span class="op-ear l"></span><span class="op-ear r"></span><span class="op-visor"></span></div>
+          <div class="op-neck"></div>
+          <div class="op-torso"><span class="op-seam"></span><span class="op-core"></span></div>
+          <div class="op-waist"></div>
+          <div class="op-sh l"></div>
+          <div class="op-sh r"></div>
+          <div class="op-arm l">
+            <div class="op-up"></div><div class="op-elbow"></div>
+            <div class="op-fore"><div class="op-hand"></div><div class="op-deck"></div></div>
+          </div>
+          <div class="op-arm r" id="opArm">
+            <div class="op-up"></div><div class="op-elbow"></div>
+            <div class="op-fore"><div class="op-hand" id="opHand"></div></div>
+          </div>
+        </div>
+        <div class="tag">Dealer</div>
+      </div>
+      <div class="board" id="board"></div>
+      <div class="potline" id="potline"></div>
+      <div class="seats" id="seats"></div>
+    </div>
+  </div>
+
+  <div class="speech" id="speech"><span id="speechTxt"></span></div>
+
+  <div class="you" id="you">
+    <div class="yourow">
+      <div class="youcards" id="youCards"></div>
+      <div class="youinfo">
+        <div class="nm" id="youName">—</div>
+        <div class="ch" id="youStack">—</div>
+        <div class="sub" id="youSub"></div>
+      </div>
+    </div>
+    <div id="controls"></div>
+  </div>
+
+  <div class="flare"></div>
+  <div class="vignette"></div>
+  <div class="grain"></div>
+
+  <div class="veil hide" id="veil">
+    <h2 id="veilTitle"></h2>
+    <p id="veilText"></p>
+    <button class="wide" id="veilBtn" style="max-width:280px"></button>
+  </div>
+
+  <!-- ===================== WELCOME ===================== -->
+  <section class="screen" id="welcome">
+    <div class="brand">
+      <div class="hi">Welcome to</div>
+      <h1>PokerLandia</h1>
+      <div class="rule"></div>
+      <p>No-limit hold'em tournaments with your friends. Pick a table below.</p>
+    </div>
+
+    <div class="field">
+      <input class="fld" id="nameFld" maxlength="12" placeholder="Your name" autocomplete="nickname">
+    </div>
+
+    <div class="menu">
+      <button class="mbtn hot" id="btnPublic">
+        <div class="t">Join a public table</div>
+        <div class="s">Sit down with whoever is online right now</div>
+      </button>
+      <button class="mbtn calm" id="btnPrivate">
+        <div class="t">Create a private table</div>
+        <div class="s">You get a code to share — only invited players can join</div>
+      </button>
+      <button class="mbtn" id="btnOffline">
+        <div class="t">Play offline</div>
+        <div class="s">Just you against the computer, no server needed</div>
+      </button>
+    </div>
+
+    <div class="field" style="margin-top:18px">
+      <input class="fld code-in" id="codeFld" maxlength="5" placeholder="CODE" autocapitalize="characters">
+      <button class="go" id="btnCode">Join</button>
+    </div>
+
+    <div class="serverlist">
+      <h3 style="font-family:var(--hud);font-size:12px;letter-spacing:.2em;text-transform:uppercase;color:var(--steel);margin:0 0 4px">Public tables</h3>
+      <div id="roomList"><div class="empty">Looking for open tables…</div></div>
+    </div>
+  </section>
+
+  <!-- ===================== LOBBY ===================== -->
+  <section class="screen hide" id="lobby">
+    <div class="codebox" id="codeBox">
+      <div class="k" id="lobbyKind">Private table</div>
+      <div class="v" id="lobbyCode">—</div>
+      <div class="n" id="lobbyNote">Share this code with your friends</div>
+    </div>
+
+    <h3 style="font-family:var(--hud);font-size:12px;letter-spacing:.2em;text-transform:uppercase;color:var(--steel);margin:0 0 2px">At the table</h3>
+    <div id="seatList"></div>
+
+    <div id="hostBox" class="hide">
+      <div class="grp" style="margin-top:22px">
+        <h3>Starting chips</h3>
+        <div class="row" id="stackRow"></div>
+        <input class="fld" id="stackFld" type="number" min="100" step="100" value="10000" inputmode="numeric">
+      </div>
+      <div class="grp">
+        <h3>Blind speed</h3>
+        <div class="row" id="speedRow"></div>
+        <p class="note" id="speedNote"></p>
+      </div>
+      <button class="mbtn" id="btnBot" style="margin-bottom:10px">
+        <div class="t">+ Add a computer player</div>
+        <div class="s">Fill empty seats so you can start sooner</div>
+      </button>
+      <button class="wide amber" id="btnStart">Start the tournament</button>
+    </div>
+
+    <div class="waiting hide" id="waitBox">Waiting for the host to start the tournament.</div>
+    <button class="linkbtn" id="btnLeave">Leave table</button>
+  </section>
+
+  <!-- ===================== RESULTS ===================== -->
+  <section class="screen hide" id="results">
+    <h1 id="resTitle" style="font-family:var(--hud);font-size:30px;letter-spacing:.05em;text-transform:uppercase;font-weight:400;margin:0 0 18px">Results</h1>
+    <div id="resList"></div>
+    <button class="wide amber" id="btnAgain" style="margin-top:24px">Back to the table</button>
+  </section>
+
+</div>
+
+<script src="/engine.js"></script>
+<script src="/app.js"></script>
+</body>
+</html>
